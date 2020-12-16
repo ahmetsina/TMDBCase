@@ -53,12 +53,28 @@
 			isa = PBXGroup;
 			children = (
 				35201DCF258A8E7C009739E6 /* AppDelegate.swift */,
-				35201DD3258A8E7C009739E6 /* ViewController.swift */,
+				35201DEB258A9A4D009739E6 /* ViewControllers */,
+				35201DE8258A9A09009739E6 /* SupportFiles */,
+			);
+			path = TMDBCase;
+			sourceTree = "<group>";
+		};
+		35201DE8258A9A09009739E6 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
 				35201DD8258A8E7E009739E6 /* Assets.xcassets */,
 				35201DDA258A8E7E009739E6 /* LaunchScreen.storyboard */,
 				35201DDD258A8E7E009739E6 /* Info.plist */,
 			);
-			path = TMDBCase;
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		35201DEB258A9A4D009739E6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				35201DD3258A8E7C009739E6 /* ViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,7 +288,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 986HH55426;
-				INFOPLIST_FILE = TMDBCase/Info.plist;
+				INFOPLIST_FILE = TMDBCase/SupportFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -292,7 +308,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 986HH55426;
-				INFOPLIST_FILE = TMDBCase/Info.plist;
+				INFOPLIST_FILE = TMDBCase/SupportFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
