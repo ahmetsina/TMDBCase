@@ -15,7 +15,7 @@ struct Person: Decodable {
     let name: String?
     let originalName: String?
     let popularity: Double?
-    let profilePath: String?
+    private let profilePath: String?
     let castId: Int?
     let character: String?
     let creditId: String?
@@ -26,4 +26,11 @@ struct Person: Decodable {
     let imdbId: String?
     let placeOfBirth: String?
     let credits: Credits<Movie, Movie>?
+}
+
+
+extension Person {
+    var profileURL: URL? {
+        AppData.shared.config?.profileBaseImageURL?.appendingPathExtension(profilePath ?? "")
+    }
 }

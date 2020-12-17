@@ -10,6 +10,16 @@ import Foundation
 struct MovieCollection: Decodable {
     let id: Int?
     let name: String?
-    let posterPath: String?
-    let backdropPath: String?
+    private let posterPath: String?
+    private let backdropPath: String?
+}
+
+extension MovieCollection {
+    var backdropURL: URL? {
+        AppData.shared.config?.backdropBaseImageURL?.appendingPathExtension(backdropPath ?? "")
+    }
+    
+    var posterURL: URL? {
+        AppData.shared.config?.posterBaseImageURL?.appendingPathExtension(posterPath ?? "")
+    }
 }

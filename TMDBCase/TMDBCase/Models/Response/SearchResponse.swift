@@ -1,40 +1,41 @@
 //
-//  Movie.swift
+//  SearchResponse.swift
 //  TMDBCase
 //
-//  Created by AppLogist on 16.12.2020.
+//  Created by AppLogist on 18.12.2020.
 //
 
 import Foundation
 
-struct Movie: Decodable {
+enum MediaType: String, CaseIterable, Codable {
+    case movie
+    case person
+    case tv
+    case genre
+}
+
+struct SearchResponse: Codable {
     let adult: Bool?
     private let backdropPath: String?
-    let belongsToCollection: MovieCollection?
-    let budget: Int?
-    let genres: [Genre]?
-    let genreIDs: [Int]?
-    let homepage: URL?
+    let genreIds: [Int]?
     let id: Int?
-    let imdbId: String?
+    let mediaType: MediaType?
     let originalLanguage: String?
     let originalTitle: String?
     let overview: String?
     let popularity: Double?
     private let posterPath: String?
     let releaseDate: Date?
-    let revenue: Int?
-    let status: String?
-    let tagline: String?
     let title: String?
     let video: Bool?
     let voteAverage: Double?
     let voteCount: Int?
-    let videos: GenericResults<Video>?
-    let credits: Credits<Person,Person>?
+    private let profilePath: String?
+    let knownFor: [SearchResponse]?
+    let knownForDepartment: String?
 }
 
-extension Movie {
+extension SearchResponse {
     var backdropURL: URL? {
         AppData.shared.config?.backdropBaseImageURL?.appendingPathExtension(backdropPath ?? "")
     }
@@ -42,5 +43,8 @@ extension Movie {
     var posterURL: URL? {
         AppData.shared.config?.posterBaseImageURL?.appendingPathExtension(posterPath ?? "")
     }
+    
+    var profileURL: URL? {
+        AppData.shared.config?.profileBaseImageURL?.appendingPathExtension(profilePath ?? "")
+    }
 }
-
