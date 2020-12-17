@@ -10,7 +10,11 @@ import UIKit
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        API().movie.process(target: .popular) { (error) in
+            debugPrint(error?.message ?? "")
+        } success: { (result: PaginableResults<[Movie]>) in
+            debugPrint(result)
+        }
     }
 }
 
