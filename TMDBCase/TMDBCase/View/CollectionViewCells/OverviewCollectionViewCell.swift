@@ -10,7 +10,7 @@ import SnapKit
 import Kingfisher
 import SkeletonView
 
-final class MovieCollectionViewCell: UICollectionViewCell {
+final class OverviewCollectionViewCell: UICollectionViewCell {
 
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -25,6 +25,8 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
@@ -37,22 +39,19 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addViews()
+        initConstraints()
     }
     
-    private func addViews(){
-        backgroundColor = UIColor.black.withAlphaComponent(0.8)
-        addSubview(imageView)
-        addSubview(titleLabel)
-        addSubview(subTitleLabel)
-        
+    private func initConstraints(){
         imageView.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview()
             make.leading.equalToSuperview()
             make.top.equalToSuperview()
-            make.width.equalTo(imageView.snp.height).multipliedBy(4/5)
         }
         
         titleLabel.snp.makeConstraints { (make) in
@@ -65,8 +64,14 @@ final class MovieCollectionViewCell: UICollectionViewCell {
             make.trailing.lessThanOrEqualToSuperview().inset(10)
             make.leading.equalTo(titleLabel.snp.leading)
             make.top.equalTo(titleLabel.snp.bottom)
-            make.bottom.lessThanOrEqualTo(self.snp.bottom).inset(5)
+            make.bottom.equalTo(self.snp.bottom).inset(5)
         }
+    }
+    private func addViews(){
+        backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        addSubview(imageView)
+        addSubview(titleLabel)
+        addSubview(subTitleLabel)
         showAnimation()
     }
     
@@ -80,7 +85,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         [imageView, titleLabel, subTitleLabel].forEach({ $0.hideSkeleton(reloadDataAfter: false, transition: .crossDissolve(3000)) })
     }
     
-    func updateUI(with viewModel: MovieCollectionCellViewModel) {
+    func updateUI(with viewModel: OverviewCollectionCellViewModel) {
         titleLabel.text = viewModel.title
         subTitleLabel.text = viewModel.subTitle
         if let imageURL = viewModel.imageURL {

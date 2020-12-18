@@ -19,8 +19,8 @@ extension MovieTarget: BaseTarget {
         switch self {
             case .popular:
                 return "popular"
-            case .details:
-                return "details"
+            case .details(let request):
+                return "/\(request.movieID ?? 0)"
         }
     }
     

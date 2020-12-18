@@ -8,10 +8,13 @@
 import Foundation
 
 struct QueryRequest: Encodable {
-    init(appendToResponse: [SubrequestType]? = nil) {
-        self.appendToResponse = appendToResponse
+    init(appendToResponse: [SubrequestType]? = nil,
+         movieID: Int? = nil) {
+        self.appendToResponse = appendToResponse?.stringWithComma
+        self.movieID = movieID
     }
     
     let apiKey = APIConstants.apiKey
-    let appendToResponse : [SubrequestType]?
+    let appendToResponse : String?
+    let movieID: Int?
 }

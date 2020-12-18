@@ -1,13 +1,13 @@
 //
-//  MovieCollectionCellViewModel.swift
+//  WideCollectionCellViewModel.swift
 //  TMDBCase
 //
-//  Created by AppLogist on 18.12.2020.
+//  Created by AppLogist on 19.12.2020.
 //
 
 import Foundation
 
-struct MovieCollectionCellViewModel {
+struct WideCollectionCellViewModel {
     public init(imageURL: URL? = nil,
                 title: String? = nil,
                 subTitle: String? = nil) {

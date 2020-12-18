@@ -48,13 +48,11 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
                     debugPrint(errorMessage)
                     return
                 }
-                self.viewModel.getPopularMovies { [weak self] (errorMessage) in
-                    guard let self = self else { return }
+                self.viewModel.getPopularMovies { (errorMessage) in
                     if let errorMessage = errorMessage {
                         debugPrint(errorMessage)
                         return
                     }
-                    
                 }
             }
         }
@@ -83,7 +81,7 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
         layout.scrollDirection = .vertical
                 
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        collectionView?.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView?.register(OverviewCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         collectionView?.backgroundColor = .clear
         
         collectionView?.delegate = self
@@ -143,11 +141,11 @@ extension MainScreenViewController: SkeletonCollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID,
-                                                            for: indexPath) as? MovieCollectionViewCell else {
+                                                            for: indexPath) as? OverviewCollectionViewCell else {
             return UICollectionViewCell()
         }
         let movie = viewModel.movie(at: indexPath.row)
-        let viewModel = MovieCollectionCellViewModel(imageURL: movie.posterURL,
+        let viewModel = OverviewCollectionCellViewModel(imageURL: movie.posterURL,
                                                      title: movie.title,
                                                      subTitle: movie.genresStringWithComma ?? "")
     
@@ -160,6 +158,8 @@ extension MainScreenViewController: SkeletonCollectionViewDataSource {
 
 extension MainScreenViewController: SkeletonCollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        /// - TODO: Selection
+        let movie = viewModel.movie(at: indexPath.row)
+        let movieDetailVC = MovieDetailScreenViewController(viewModel: MovieDetailScreenViewModel(movieID: movie.id))
+        navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

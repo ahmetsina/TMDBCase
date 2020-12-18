@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias ErrorMessageBlock = ((_ errorMessage: String?) -> ())
+typealias ErrorBlock = ((_ error: PresentableError?) -> ())
 
 class MainScreenViewModel {
     init() {}
@@ -31,26 +31,26 @@ class MainScreenViewModel {
     // MARK: - Service Calls
     
     // We can move to splash screen this check
-    func getConfig(completion: @escaping ErrorMessageBlock){
+    func getConfig(completion: @escaping ErrorBlock){
         if AppData.shared.config != nil {
             completion(nil)
             return
         }
         configApi.process(target: .getConfig) {(error) in
-            completion(error?.message)
+            completion(error)
         } success: { (response: Configuration) in
             AppData.shared.config = response
             completion(nil)
         }
     }
     
-    func getGenres(completion: @escaping ErrorMessageBlock){
+    func getGenres(completion: @escaping ErrorBlock){
         if !AppData.shared.genres.isEmpty {
             completion(nil)
             return
         }
         genreApi.process(target: .movieList) {(error) in
-            completion(error?.message)
+            completion(error)
         } success: { (response: GenresResponse) in
             AppData.shared.genres = response.genres ?? []
             completion(nil)
@@ -60,9 +60,9 @@ class MainScreenViewModel {
     
     /// Get Popular Movies From Services
     /// - Parameter completion: Handler error message
-    func getPopularMovies(completion: @escaping ErrorMessageBlock) {
+    func getPopularMovies(completion: @escaping ErrorBlock) {
         movieApi.process(target: .popular) { (error) in
-            completion(error?.message)
+            completion(error)
         } success: { [weak self] (response: PaginableResults<[Movie]>) in
             guard let self = self else { return }
             self.movies = response.results ?? []
