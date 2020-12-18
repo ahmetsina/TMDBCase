@@ -16,10 +16,10 @@ struct MovieCollection: Decodable {
 
 extension MovieCollection {
     var backdropURL: URL? {
-        AppData.shared.config?.backdropBaseImageURL?.appendingPathExtension(backdropPath ?? "")
+        AppData.shared.config?.backdropBaseImageURL?.appendingPathComponent(backdropPath ?? "")
     }
     
     var posterURL: URL? {
-        AppData.shared.config?.posterBaseImageURL?.appendingPathExtension(posterPath ?? "")
+        AppData.shared.config?.posterBaseImageURL?.appendingPathComponent(posterPath ?? "")
     }
 }

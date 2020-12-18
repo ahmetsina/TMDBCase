@@ -37,14 +37,14 @@ struct SearchResponse: Codable {
 
 extension SearchResponse {
     var backdropURL: URL? {
-        AppData.shared.config?.backdropBaseImageURL?.appendingPathExtension(backdropPath ?? "")
+        AppData.shared.config?.backdropBaseImageURL?.appendingPathComponent(backdropPath ?? "")
     }
     
     var posterURL: URL? {
-        AppData.shared.config?.posterBaseImageURL?.appendingPathExtension(posterPath ?? "")
+        AppData.shared.config?.posterBaseImageURL?.appendingPathComponent(posterPath ?? "")
     }
     
     var profileURL: URL? {
-        AppData.shared.config?.profileBaseImageURL?.appendingPathExtension(profilePath ?? "")
+        AppData.shared.config?.profileBaseImageURL?.appendingPathComponent(profilePath ?? "")
     }
 }

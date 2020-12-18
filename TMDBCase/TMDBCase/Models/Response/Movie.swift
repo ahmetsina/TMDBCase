@@ -13,7 +13,7 @@ struct Movie: Decodable {
     let belongsToCollection: MovieCollection?
     let budget: Int?
     let genres: [Genre]?
-    let genreIDs: [Int]?
+    let genreIds: [Int]?
     let homepage: URL?
     let id: Int?
     let imdbId: String?
@@ -35,12 +35,16 @@ struct Movie: Decodable {
 }
 
 extension Movie {
+    var genresStringWithComma: String? {
+        genreIds?.convertToGenres.compactMap({ $0.name }).joined(separator: ",")
+    }
+    
     var backdropURL: URL? {
-        AppData.shared.config?.backdropBaseImageURL?.appendingPathExtension(backdropPath ?? "")
+        AppData.shared.config?.backdropBaseImageURL?.appendingPathComponent(backdropPath ?? "")
     }
     
     var posterURL: URL? {
-        AppData.shared.config?.posterBaseImageURL?.appendingPathExtension(posterPath ?? "")
+        AppData.shared.config?.posterBaseImageURL?.appendingPathComponent(posterPath ?? "")
     }
 }
 

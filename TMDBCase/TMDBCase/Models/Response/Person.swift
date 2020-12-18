@@ -31,6 +31,6 @@ struct Person: Decodable {
 
 extension Person {
     var profileURL: URL? {
-        AppData.shared.config?.profileBaseImageURL?.appendingPathExtension(profilePath ?? "")
+        AppData.shared.config?.profileBaseImageURL?.appendingPathComponent(profilePath ?? "")
     }
 }

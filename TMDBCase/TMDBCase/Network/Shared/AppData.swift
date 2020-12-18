@@ -11,5 +11,6 @@ final class AppData {
     static let shared = AppData()
     
     var config : Configuration?
+    var genres: [Genre] = []
 
 }

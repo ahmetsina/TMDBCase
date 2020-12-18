@@ -23,7 +23,7 @@ extension Configuration {
     var baseImageURL: URL? { images?.secureBaseUrl }
     var backdropBaseImageURL: URL? { baseImageURL?.appendingPathComponent(images?.backdropSizes?.last ?? "") }
     var logoBaseImageURL: URL? { baseImageURL?.appendingPathComponent(images?.logoSizes?.last ?? "")}
-    var posterBaseImageURL: URL? { baseImageURL?.appendingPathComponent(images?.posterSizes?.last ?? "")}
+    var posterBaseImageURL: URL? { baseImageURL?.appendingPathComponent(images?.posterSizes?[2] ?? "")}
     var profileBaseImageURL: URL? { baseImageURL?.appendingPathComponent(images?.profileSizes?.last ?? "")}
 }
 
