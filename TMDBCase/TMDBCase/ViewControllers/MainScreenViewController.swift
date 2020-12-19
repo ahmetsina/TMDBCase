@@ -32,10 +32,12 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
     }
     
     fileprivate func callViewModelActions() {
-        viewModel.moviesReloadHandler = { [weak self] in
+        viewModel.reloadHandler = { [weak self] in
             guard let self = self else { return }
-            self.collectionView?.reloadData()
+            self.updateNotFoundMessage()
+            self.collectionView.reloadData()
         }
+        
         viewModel.getConfig { [weak self] (errorMessage) in
             guard let self = self else { return }
             if let errorMessage = errorMessage {
@@ -86,6 +88,33 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         collectionView.register(OverviewCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.register(SectionHeader.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: "header")
+        collectionView.register(UICollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: "emptyHeader")
+        updateNotFoundMessage()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.reloadData()
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
+        }
+    }
+
+    func updateNotFoundMessage() {
+        if viewModel.isSearchActive {
+            collectionView.emptyDataSetView({ [weak self] (view) in
+                guard let self = self else { return }
+                view.titleLabelString(NSAttributedString(string: "No Movies"))
+                    .detailLabelString(NSAttributedString(string: "No Data Found with \(self.searchController.searchBar.text ?? "")"))
+                    .shouldDisplay(true)
+                    .shouldFadeIn(true)
+            })
+            return
+        }
         collectionView.emptyDataSetView({ [weak self] (view) in
             guard let self = self else { return }
             view.titleLabelString(NSAttributedString(string: "No Movies"))
@@ -99,15 +128,7 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
                     self.callViewModelActions()
                 }
         })
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.reloadData()
-        if let collectionView = collectionView {
-            view.addSubview(collectionView)
-        }
     }
-
     
     // MARK: - Update UI
     private func updateSearchController(){
@@ -132,14 +153,10 @@ extension MainScreenViewController: UISearchResultsUpdating {
         guard let searchText = searchController.searchBar.text,
               !searchText.isEmpty,
               searchController.isActive  else {
-            //viewModel.update(filteredList: [])
-            /// - TODO: Reload Data
+            viewModel.searchQuery = ""
             return
         }
-        
-        //filterContentForSearchText(searchText)
-        //updateTableViewData()
-        debugPrint(searchText)
+        viewModel.searchQuery = searchText
     }
 }
 
@@ -147,9 +164,11 @@ extension MainScreenViewController: UISearchResultsUpdating {
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 
 extension MainScreenViewController: UICollectionViewDataSource {
-    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel.numberOfSections
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.movieCount
+        viewModel.numberOfItemsinSection(section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,7 +176,8 @@ extension MainScreenViewController: UICollectionViewDataSource {
                                                             for: indexPath) as? OverviewCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let movie = viewModel.movie(at: indexPath.row)
+        let movie = viewModel.movie(at: indexPath)
+
         let viewModel = OverviewCollectionCellViewModel(imageURL: movie.posterURL,
                                                      title: movie.title,
                                                      subTitle: movie.genresStringWithComma ?? "")
@@ -168,10 +188,39 @@ extension MainScreenViewController: UICollectionViewDataSource {
     }
 }
 
-extension MainScreenViewController: UICollectionViewDelegate {
+extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = viewModel.movie(at: indexPath.row)
+        let movie = viewModel.movie(at: indexPath)
         let movieDetailVC = MovieDetailScreenViewController(viewModel: MovieDetailScreenViewModel(movieID: movie.id))
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind != UICollectionView.elementKindSectionHeader || searchController.searchBar.text == "" {
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                   withReuseIdentifier: "emptyHeader",
+                                                                                   for: indexPath)
+            headerView.frame.size.height = 0
+            headerView.frame.size.width = 0
+            return headerView
+        }
+        guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                                  withReuseIdentifier: "header",
+                                                                                  for: indexPath) as? SectionHeader else {
+            return UICollectionReusableView()
+        }
+        sectionHeader.label.text = viewModel.searchResults[indexPath.section].title
+        return sectionHeader
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if !viewModel.isSearchActive {
+            return CGSize(width: 0, height: 0)
+        }
+        return CGSize(width: collectionView.frame.width, height: 40)
+    }
+    
 }

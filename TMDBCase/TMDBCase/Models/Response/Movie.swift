@@ -45,4 +45,3 @@ extension Movie {
         AppData.shared.config?.posterBaseImageURL?.appendingPathComponent(posterPath ?? "")
     }
 }
-
