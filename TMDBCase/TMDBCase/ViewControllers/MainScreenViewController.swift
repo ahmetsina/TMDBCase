@@ -6,11 +6,11 @@
 //
 
 import UIKit
-
+import EmptyDataSet
 
 final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
     
-    private var collectionView: UICollectionView?
+    private var collectionView: UICollectionView!
     private var cellID = "MovieCollectionCellID"
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -48,7 +48,10 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
                     debugPrint(errorMessage)
                     return
                 }
-                self.viewModel.getPopularMovies { (errorMessage) in
+                self.startAnimating()
+                self.viewModel.getPopularMovies { [weak self] (errorMessage) in
+                    guard let self = self else { return }
+                    self.stopAnimating()
                     if let errorMessage = errorMessage {
                         debugPrint(errorMessage)
                         return
@@ -81,12 +84,25 @@ final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
         layout.scrollDirection = .vertical
                 
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        collectionView?.register(OverviewCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
-        collectionView?.backgroundColor = .clear
+        collectionView.register(OverviewCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.backgroundColor = .clear
+        collectionView.emptyDataSetView({ [weak self] (view) in
+            guard let self = self else { return }
+            view.titleLabelString(NSAttributedString(string: "No Movies"))
+                .detailLabelString(NSAttributedString(string: "No Data Found"))
+                .buttonTitle(NSAttributedString(string: "Tap to Refresh"), for: .normal)
+                .shouldDisplay(true)
+                .shouldFadeIn(true)
+                .isTouchAllowed(true)
+                .isScrollAllowed(true)
+                .didTapContentView {
+                    self.callViewModelActions()
+                }
+        })
         
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        collectionView?.reloadData()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.reloadData()
         if let collectionView = collectionView {
             view.addSubview(collectionView)
         }

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "EmptyDataSet-Swift",
+        "repositoryURL": "https://github.com/ahmetsina/EmptyDataSet-Swift.git",
+        "state": {
+          "branch": "master",
+          "revision": "4dba019510d71523082cba7bae2f09d1ad07a8df",
+          "version": null
+        }
+      },
+      {
         "package": "Kingfisher",
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {
@@ -26,6 +35,15 @@
           "branch": null,
           "revision": "b3e5a233e0d85fd4d69f561c80988590859c7dee",
           "version": "14.0.0"
+        }
+      },
+      {
+        "package": "NVActivityIndicatorView",
+        "repositoryURL": "https://github.com/ninjaprox/NVActivityIndicatorView.git",
+        "state": {
+          "branch": null,
+          "revision": "4a4726d15367d82bd3e9e1f01625bd76dbbb0c98",
+          "version": "4.8.0"
         }
       },
       {

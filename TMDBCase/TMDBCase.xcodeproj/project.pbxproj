@@ -20,6 +20,8 @@
 		355EFAA2258D5F0F00802A02 /* PersonDetailScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFAA1258D5F0F00802A02 /* PersonDetailScreenViewController.swift */; };
 		355EFAA5258D5F3B00802A02 /* PersonDetailScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFAA4258D5F3B00802A02 /* PersonDetailScreenViewModel.swift */; };
 		355EFAAD258D795D00802A02 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFAAC258D795D00802A02 /* Alert.swift */; };
+		355EFB00258D8EDB00802A02 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 355EFAFF258D8EDB00802A02 /* NVActivityIndicatorView */; };
+		355EFB08258D91CE00802A02 /* EmptyDataSet in Frameworks */ = {isa = PBXBuildFile; productRef = 355EFB07258D91CE00802A02 /* EmptyDataSet */; };
 		3573B982258A9CB000A87B5C /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3573B981258A9CB000A87B5C /* Moya */; };
 		3573B986258AA20D00A87B5C /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573B985258AA20D00A87B5C /* Movie.swift */; };
 		3573B989258AA23200A87B5C /* MovieCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573B988258AA23200A87B5C /* MovieCollection.swift */; };
@@ -112,6 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				355EFB00258D8EDB00802A02 /* NVActivityIndicatorView in Frameworks */,
+				355EFB08258D91CE00802A02 /* EmptyDataSet in Frameworks */,
 				35532FCA258C217700DABF23 /* Kingfisher in Frameworks */,
 				3573B982258A9CB000A87B5C /* Moya in Frameworks */,
 				35532FB5258C18AE00DABF23 /* SnapKit in Frameworks */,
@@ -346,6 +350,8 @@
 				3573B981258A9CB000A87B5C /* Moya */,
 				35532FB4258C18AE00DABF23 /* SnapKit */,
 				35532FC9258C217700DABF23 /* Kingfisher */,
+				355EFAFF258D8EDB00802A02 /* NVActivityIndicatorView */,
+				355EFB07258D91CE00802A02 /* EmptyDataSet */,
 			);
 			productName = TMDBCase;
 			productReference = 35201DCC258A8E7C009739E6 /* TMDBCase.app */;
@@ -378,6 +384,8 @@
 				3573B980258A9CB000A87B5C /* XCRemoteSwiftPackageReference "Moya" */,
 				35532FB3258C18AD00DABF23 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				35532FC8258C217700DABF23 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				355EFAFE258D8EDB00802A02 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
+				355EFB06258D91CE00802A02 /* XCRemoteSwiftPackageReference "EmptyDataSet-Swift" */,
 			);
 			productRefGroup = 35201DCD258A8E7C009739E6 /* Products */;
 			projectDirPath = "";
@@ -661,6 +669,22 @@
 				version = 5.15.8;
 			};
 		};
+		355EFAFE258D8EDB00802A02 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.8.0;
+			};
+		};
+		355EFB06258D91CE00802A02 /* XCRemoteSwiftPackageReference "EmptyDataSet-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ahmetsina/EmptyDataSet-Swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		3573B980258A9CB000A87B5C /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -681,6 +705,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35532FC8258C217700DABF23 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		355EFAFF258D8EDB00802A02 /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 355EFAFE258D8EDB00802A02 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
+		};
+		355EFB07258D91CE00802A02 /* EmptyDataSet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 355EFB06258D91CE00802A02 /* XCRemoteSwiftPackageReference "EmptyDataSet-Swift" */;
+			productName = EmptyDataSet;
 		};
 		3573B981258A9CB000A87B5C /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -68,6 +68,5 @@ class MainScreenViewModel {
             self.movies = response.results ?? []
             completion(nil)
         }
-
     }
 }

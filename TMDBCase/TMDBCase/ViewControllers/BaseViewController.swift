@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
-class BaseViewController<U>: UIViewController, BaseViewControllerViewModel {
+class BaseViewController<U>: UIViewController, BaseViewControllerViewModel, NVActivityIndicatorViewable {
     
     typealias T = U
     var viewModel : T
@@ -30,5 +31,4 @@ class BaseViewController<U>: UIViewController, BaseViewControllerViewModel {
         super.viewDidLoad()
         view.backgroundColor = .white
     }
-    
 }

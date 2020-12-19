@@ -41,8 +41,10 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        startAnimating()
         viewModel.getMovieDetail { [weak self] (error) in
             guard let self = self else { return }
+            self.stopAnimating()
             if let error = error {
                 Alert.shared.showAlert(for: error, on: self)
                 return
