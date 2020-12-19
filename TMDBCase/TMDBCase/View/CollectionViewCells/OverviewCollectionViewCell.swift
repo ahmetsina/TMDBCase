@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import Kingfisher
-import SkeletonView
 
 final class OverviewCollectionViewCell: UICollectionViewCell {
 
@@ -72,17 +71,6 @@ final class OverviewCollectionViewCell: UICollectionViewCell {
         addSubview(imageView)
         addSubview(titleLabel)
         addSubview(subTitleLabel)
-        showAnimation()
-    }
-    
-    func showAnimation() {
-        [imageView, titleLabel, subTitleLabel].forEach({
-                                                        $0.isSkeletonable = true
-                                                        $0.showAnimatedSkeleton() })
-    }
-    
-    func hideAnimation() {
-        [imageView, titleLabel, subTitleLabel].forEach({ $0.hideSkeleton(reloadDataAfter: false, transition: .crossDissolve(3000)) })
     }
     
     func updateUI(with viewModel: OverviewCollectionCellViewModel) {

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SkeletonView
+
 
 final class MainScreenViewController: BaseViewController<MainScreenViewModel> {
     
@@ -130,10 +130,7 @@ extension MainScreenViewController: UISearchResultsUpdating {
 
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 
-extension MainScreenViewController: SkeletonCollectionViewDataSource {
-    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        cellID
-    }
+extension MainScreenViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.movieCount
@@ -151,12 +148,11 @@ extension MainScreenViewController: SkeletonCollectionViewDataSource {
     
         cell.updateUI(with: viewModel)
         cell.shadowDecorate()
-        cell.hideAnimation()
         return cell
     }
 }
 
-extension MainScreenViewController: SkeletonCollectionViewDelegate {
+extension MainScreenViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = viewModel.movie(at: indexPath.row)
         let movieDetailVC = MovieDetailScreenViewController(viewModel: MovieDetailScreenViewModel(movieID: movie.id))

@@ -12,12 +12,14 @@
 		35201DDC258A8E7E009739E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35201DDA258A8E7E009739E6 /* LaunchScreen.storyboard */; };
 		35532FB5258C18AE00DABF23 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 35532FB4258C18AE00DABF23 /* SnapKit */; };
 		35532FB9258C1A2800DABF23 /* OverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35532FB8258C1A2800DABF23 /* OverviewCollectionViewCell.swift */; };
-		35532FBD258C1DAD00DABF23 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 35532FBC258C1DAD00DABF23 /* SkeletonView */; };
 		35532FC0258C1E1D00DABF23 /* TMDB+UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35532FBF258C1E1D00DABF23 /* TMDB+UICollectionViewCell.swift */; };
 		35532FC6258C20BD00DABF23 /* OverviewCollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35532FC5258C20BD00DABF23 /* OverviewCollectionCellViewModel.swift */; };
 		35532FCA258C217700DABF23 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 35532FC9258C217700DABF23 /* Kingfisher */; };
 		35532FCD258C269C00DABF23 /* GenreTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35532FCC258C269C00DABF23 /* GenreTarget.swift */; };
 		35532FD0258C271900DABF23 /* GenresResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35532FCF258C271900DABF23 /* GenresResponse.swift */; };
+		355EFAA2258D5F0F00802A02 /* PersonDetailScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFAA1258D5F0F00802A02 /* PersonDetailScreenViewController.swift */; };
+		355EFAA5258D5F3B00802A02 /* PersonDetailScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFAA4258D5F3B00802A02 /* PersonDetailScreenViewModel.swift */; };
+		355EFAAD258D795D00802A02 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355EFAAC258D795D00802A02 /* Alert.swift */; };
 		3573B982258A9CB000A87B5C /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 3573B981258A9CB000A87B5C /* Moya */; };
 		3573B986258AA20D00A87B5C /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573B985258AA20D00A87B5C /* Movie.swift */; };
 		3573B989258AA23200A87B5C /* MovieCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3573B988258AA23200A87B5C /* MovieCollection.swift */; };
@@ -66,6 +68,9 @@
 		35532FC5258C20BD00DABF23 /* OverviewCollectionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCollectionCellViewModel.swift; sourceTree = "<group>"; };
 		35532FCC258C269C00DABF23 /* GenreTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreTarget.swift; sourceTree = "<group>"; };
 		35532FCF258C271900DABF23 /* GenresResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresResponse.swift; sourceTree = "<group>"; };
+		355EFAA1258D5F0F00802A02 /* PersonDetailScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailScreenViewController.swift; sourceTree = "<group>"; };
+		355EFAA4258D5F3B00802A02 /* PersonDetailScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailScreenViewModel.swift; sourceTree = "<group>"; };
+		355EFAAC258D795D00802A02 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		3573B985258AA20D00A87B5C /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		3573B988258AA23200A87B5C /* MovieCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollection.swift; sourceTree = "<group>"; };
 		3573B98B258AA27300A87B5C /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
@@ -109,7 +114,6 @@
 			files = (
 				35532FCA258C217700DABF23 /* Kingfisher in Frameworks */,
 				3573B982258A9CB000A87B5C /* Moya in Frameworks */,
-				35532FBD258C1DAD00DABF23 /* SkeletonView in Frameworks */,
 				35532FB5258C18AE00DABF23 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				35201DCF258A8E7C009739E6 /* AppDelegate.swift */,
+				355EFAA7258D794300802A02 /* Helpers */,
 				3573B9CA258AB4D200A87B5C /* Network */,
 				3573B984258A9DD200A87B5C /* Models */,
 				35532FB7258C1A0300DABF23 /* View */,
@@ -163,6 +168,7 @@
 				3597FB45258C7FF00067BD53 /* MainScreenViewController.swift */,
 				3597FB48258C807A0067BD53 /* MovieDetailScreenViewController.swift */,
 				35C7A231258BF4AA000EEF91 /* BaseViewController.swift */,
+				355EFAA1258D5F0F00802A02 /* PersonDetailScreenViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -191,6 +197,14 @@
 				35532FBF258C1E1D00DABF23 /* TMDB+UICollectionViewCell.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		355EFAA7258D794300802A02 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				355EFAAC258D795D00802A02 /* Alert.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		3573B984258A9DD200A87B5C /* Models */ = {
@@ -259,6 +273,7 @@
 				35532FC5258C20BD00DABF23 /* OverviewCollectionCellViewModel.swift */,
 				3597FB4B258C80D10067BD53 /* MovieDetailScreenViewModel.swift */,
 				358B87F8258D504D00D8B4E5 /* WideCollectionCellViewModel.swift */,
+				355EFAA4258D5F3B00802A02 /* PersonDetailScreenViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -330,7 +345,6 @@
 			packageProductDependencies = (
 				3573B981258A9CB000A87B5C /* Moya */,
 				35532FB4258C18AE00DABF23 /* SnapKit */,
-				35532FBC258C1DAD00DABF23 /* SkeletonView */,
 				35532FC9258C217700DABF23 /* Kingfisher */,
 			);
 			productName = TMDBCase;
@@ -363,7 +377,6 @@
 			packageReferences = (
 				3573B980258A9CB000A87B5C /* XCRemoteSwiftPackageReference "Moya" */,
 				35532FB3258C18AD00DABF23 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				35532FBB258C1DAD00DABF23 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				35532FC8258C217700DABF23 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 35201DCD258A8E7C009739E6 /* Products */;
@@ -396,6 +409,7 @@
 				35EFE6B1258AC628002005F4 /* PresentableError.swift in Sources */,
 				3573B9BD258AB3CB00A87B5C /* PathParams.swift in Sources */,
 				3573B9C8258AB4CF00A87B5C /* MovieTarget.swift in Sources */,
+				355EFAA5258D5F3B00802A02 /* PersonDetailScreenViewModel.swift in Sources */,
 				35EFE6AE258AC5EA002005F4 /* BaseAPI.swift in Sources */,
 				35C7A232258BF4AA000EEF91 /* BaseViewController.swift in Sources */,
 				3573B9A9258AA6AC00A87B5C /* GenericResults.swift in Sources */,
@@ -417,6 +431,7 @@
 				35532FCD258C269C00DABF23 /* GenreTarget.swift in Sources */,
 				358B87F9258D504D00D8B4E5 /* WideCollectionCellViewModel.swift in Sources */,
 				35BE6D34258B32960077FD74 /* API.swift in Sources */,
+				355EFAA2258D5F0F00802A02 /* PersonDetailScreenViewController.swift in Sources */,
 				3573B989258AA23200A87B5C /* MovieCollection.swift in Sources */,
 				35BE6D31258AE7F50077FD74 /* DateFormatter.swift in Sources */,
 				3573B9B1258AB28E00A87B5C /* QueryRequest.swift in Sources */,
@@ -428,6 +443,7 @@
 				35BE6D2E258AE2340077FD74 /* PaginableResults.swift in Sources */,
 				35532FD0258C271900DABF23 /* GenresResponse.swift in Sources */,
 				35C7A23B258BF647000EEF91 /* BaseViewControllerViewModel.swift in Sources */,
+				355EFAAD258D795D00802A02 /* Alert.swift in Sources */,
 				35EFE6B5258AC6DD002005F4 /* APIError.swift in Sources */,
 				35532FC0258C1E1D00DABF23 /* TMDB+UICollectionViewCell.swift in Sources */,
 				35532FB9258C1A2800DABF23 /* OverviewCollectionViewCell.swift in Sources */,
@@ -637,14 +653,6 @@
 				version = 5.0.1;
 			};
 		};
-		35532FBB258C1DAD00DABF23 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.11.0;
-			};
-		};
 		35532FC8258C217700DABF23 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -668,11 +676,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35532FB3258C18AD00DABF23 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		35532FBC258C1DAD00DABF23 /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 35532FBB258C1DAD00DABF23 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
 		};
 		35532FC9258C217700DABF23 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

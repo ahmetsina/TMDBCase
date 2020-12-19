@@ -1,14 +1,13 @@
 //
-//  MovieDetailScreenViewController.swift
+//  PersonDetailScreenViewController.swift
 //  TMDBCase
 //
-//  Created by AppLogist on 18.12.2020.
+//  Created by AppLogist on 19.12.2020.
 //
 
 import UIKit
 
-
-final class MovieDetailScreenViewController: BaseViewController<MovieDetailScreenViewModel> {
+final class PersonDetailScreenViewController: BaseViewController<PersonDetailScreenViewModel> {
     
     private var previousStatusBarHidden = false
     private let scrollView = UIScrollView()
@@ -20,7 +19,7 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
         label.font = UIFont.boldSystemFont(ofSize: 27)
         return label
     }()
-    private let rateLabel : UILabel = {
+    private let topInfoLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
@@ -32,23 +31,23 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
     private var collectionView: UICollectionView?
     private var cellID = "MovieCollectionCellID"
     
-    private var videosCollectionView: UICollectionView?
-    private var videoCellID = "VideoCollectionCellID"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getMovieDetail { [weak self] (error) in
+        viewModel.getPersonDetail { [weak self] (error) in
             guard let self = self else { return }
             if let error = error {
                 Alert.shared.showAlert(for: error, on: self)
                 return
             }
-            if let movie = self.viewModel.movie {
-                self.updateUI(with: movie)
+            if let movie = self.viewModel.person {
+                DispatchQueue.main.async {
+                    self.updateUI(with: movie)
+                }
             }
         }
     }
@@ -58,8 +57,6 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
         configInsets()
     }
     
-    // MARK: - Services
-    
     
     // MARK: - Setup UI
     private func setupUI(){
@@ -67,38 +64,36 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
         scrollView.showsVerticalScrollIndicator = false
         stackView.axis = .vertical
         stackView.spacing = 10
-        imageView.contentMode = .scaleAspectFill
-        setupInfoText(wtih: "")
+        imageView.contentMode = .scaleAspectFit
+        summaryLabel.numberOfLines = 0
     }
     
-    private func updateUI(with movie: Movie){
-        if let imageURL = movie.backdropURL {
+    private func updateUI(with person: Person){
+        if let imageURL = person.profileURL {
             imageView.kf.setImage(with: imageURL)
         }
-        titleLabel.text = movie.title
-        summaryLabel.text = movie.overview
-        if let rating = movie.voteAverage {
-            rateLabel.text = "Rating: \(rating)"
-        }else {
-            rateLabel.text = "Rating: N/A"
+        titleLabel.text = person.name
+        summaryLabel.text = person.biography
+        
+        if let birthday = person.birthday {
+            let formatter1 = DateFormatter()
+            formatter1.dateStyle = .medium
+            let birthdayString = formatter1.string(from: birthday)
+            topInfoLabel.text = "\(birthdayString)" // Formatlanabilir
+        }
+        if let placeOfBirth = person.placeOfBirth {
+            topInfoLabel.text = "\(topInfoLabel.text ?? ""), \(placeOfBirth)"
         }
         
-        if let cast = viewModel.movie?.credits?.cast,
+        if let cast = viewModel.person?.credits?.cast,
            !cast.isEmpty,
-            collectionView == nil {
+           collectionView == nil {
             addCastsSection(cast: cast)
-        }
-        
-        if let videos = viewModel.movie?.videos?.results,
-           !videos.isEmpty,
-            videosCollectionView == nil {
-            addVideosSection(videos: videos)
         }
     }
     
     private func initConstraints(){
         view.addSubview(scrollView)
-        
         scrollView.addSubview(imageContainer)
         
         scrollView.snp.makeConstraints { make in
@@ -110,6 +105,7 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
             make.left.right.equalTo(view)
             make.height.equalTo(imageContainer.snp.width).multipliedBy(0.5)
         }
+        
         
         scrollView.addSubview(imageView)
         
@@ -123,6 +119,7 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
             make.bottom.equalTo(imageContainer.snp.bottom)
         }
         
+        
         scrollView.addSubview(stackView)
         //Pin the backing view below the image view and to the
         // bottom of the scroll view
@@ -131,35 +128,22 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
             make.left.right.equalTo(view).inset(16)
             make.bottom.equalTo(scrollView).inset(16)
         }
-        stackView.addArrangedSubview(rateLabel)
+        stackView.addArrangedSubview(topInfoLabel)
         stackView.addArrangedSubview(titleLabel)
         addSeperator()
         stackView.addArrangedSubview(summaryLabel)
     }
     
-    private func addCastsSection(cast: [Person]){
+    private func addCastsSection(cast: [Movie]){
         setupCastTitleLabel()
         addSeperator()
         setupCastCollectionView()
     }
     
-    private func addVideosSection(videos: [Video]){
-        setupVideosTitleLabel()
-        addSeperator()
-        setupVideosCollectionView(videos: videos)
-    }
-    
     private func setupCastTitleLabel(){
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        titleLabel.text = "Cast"
-        stackView.addArrangedSubview(titleLabel)
-    }
-    
-    private func setupVideosTitleLabel(){
-        let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        titleLabel.text = "Videos"
+        titleLabel.text = "Credits"
         stackView.addArrangedSubview(titleLabel)
     }
     
@@ -198,41 +182,6 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
         })
     }
     
-    private func setupVideosCollectionView(videos: [Video]){
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        let itemHeight : CGFloat = 50
-        let itemSpace : CGFloat = 10
-        let collectionViewHeight: CGFloat = CGFloat(videos.count) * itemHeight + (CGFloat(videos.count) * itemSpace)
-        
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.minimumLineSpacing = itemSpace
-        layout.itemSize = CGSize(width: stackView.frame.width - 10, height: itemHeight)
-        layout.scrollDirection = .vertical
-        
-        videosCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        videosCollectionView?.register(WideCollectionViewCell.self, forCellWithReuseIdentifier: videoCellID)
-        videosCollectionView?.backgroundColor = .clear
-        videosCollectionView?.clipsToBounds = false
-        videosCollectionView?.isScrollEnabled = false
-        
-        videosCollectionView?.delegate = self
-        videosCollectionView?.dataSource = self
-        
-        if let collectionView = videosCollectionView {
-            stackView.addArrangedSubview(collectionView)
-        }
-        videosCollectionView?.snp.makeConstraints({ (make) in
-            make.height.equalTo(collectionViewHeight)
-        })
-        
-        videosCollectionView?.reloadData()
-    }
-    
-    
-    private func setupInfoText(wtih: String){
-        summaryLabel.numberOfLines = 0
-    }
-    
     private func configInsets(){
         if #available(iOS 11.0, *) {
             // We want the scroll indicators to use all safe area insets
@@ -244,7 +193,7 @@ final class MovieDetailScreenViewController: BaseViewController<MovieDetailScree
 }
 
 // MARK: - UIScrollViewDelegate
-extension MovieDetailScreenViewController: UIScrollViewDelegate {
+extension PersonDetailScreenViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //** We keep the previous status bar hidden state so that
@@ -281,47 +230,31 @@ extension MovieDetailScreenViewController: UIScrollViewDelegate {
 
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 
-extension MovieDetailScreenViewController: UICollectionViewDataSource {
+extension PersonDetailScreenViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == videosCollectionView { return viewModel.videosCount }
         return viewModel.castCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == videosCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: videoCellID,
-                                                                for: indexPath) as? WideCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            guard let video = viewModel.video(at: indexPath.row) else { return cell }
-            let viewModel = WideCollectionCellViewModel( title: video.name,
-                                                         subTitle: video.site)
-            
-            cell.updateUI(with: viewModel)
-            cell.shadowDecorate()
-            return cell
-        }else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID,
-                                                                for: indexPath) as? OverviewCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            guard let cast = viewModel.cast(at: indexPath.row) else { return cell }
-            let viewModel = OverviewCollectionCellViewModel(imageURL: cast.profileURL,
-                                                            title: cast.name,
-                                                            subTitle: cast.character)
-            
-            cell.updateUI(with: viewModel)
-            cell.shadowDecorate()
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID,
+                                                            for: indexPath) as? OverviewCollectionViewCell else {
+            return UICollectionViewCell()
         }
+        guard let cast = viewModel.cast(at: indexPath.row) else { return cell }
+        let viewModel = OverviewCollectionCellViewModel(imageURL: cast.posterURL,
+                                                        title: cast.title,
+                                                        subTitle: cast.genresStringWithComma)
+        
+        cell.updateUI(with: viewModel)
+        cell.shadowDecorate()
+        return cell
     }
 }
 
-extension MovieDetailScreenViewController: UICollectionViewDelegate {
+extension PersonDetailScreenViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cast = viewModel.cast(at: indexPath.row),
-              let id = cast.id else { return }
-        let personDetailVC = PersonDetailScreenViewController(viewModel: PersonDetailScreenViewModel(personID: id))
-        navigationController?.pushViewController(personDetailVC, animated: true)
+        guard let cast = viewModel.cast(at: indexPath.row) else { return }
+        let movieDetailVC = MovieDetailScreenViewController(viewModel: MovieDetailScreenViewModel(movieID: cast.id))
+        navigationController?.pushViewController(movieDetailVC, animated: true)
     }
 }

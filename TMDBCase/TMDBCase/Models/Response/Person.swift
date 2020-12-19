@@ -22,6 +22,7 @@ struct Person: Decodable {
     let alsoKnownAs: [String]?
     let biography: String?
     let birthday: Date?
+    let deathday: Date?
     let homepage: URL?
     let imdbId: String?
     let placeOfBirth: String?

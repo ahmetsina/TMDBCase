@@ -14,7 +14,12 @@ enum PersonTarget {
 
 extension PersonTarget: BaseTarget {
     var subDirectory: String { "person" }
-    var path: String { "details" }
+    var path: String {
+        switch self {
+            case .details(let request):
+                return "/\(request.personID ?? 0)"
+        }
+    }
     var task: Task {
         switch self {
             case .details(let request):
